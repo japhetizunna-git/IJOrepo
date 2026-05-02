@@ -1,11 +1,11 @@
-name: deploy terraform resources
+name: destroy terraform resources
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  deploy:
+  destroy:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,5 +29,5 @@ jobs:
     - name: Plan Terraform deployment
       run: terraform plan
 
-    - name: Apply Terraform configuration
-      run: terraform apply -auto-approve
+    - name: Destroy Terraform resources
+      run: terraform destroy -auto-approve
