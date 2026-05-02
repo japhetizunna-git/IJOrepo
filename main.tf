@@ -4,12 +4,12 @@
 # }
 
 resource "azurerm_resource_group" "rg" {
-  name = var.rg_name
+  name = "justrg"
   location = "East US"
 }
 
-resource "azurerm_storage_account" "professor" {
-  name                     = var.storage_account
+resource "azurerm_storage_account" "fizustorage" {
+  name                     = "myfizustorage2026"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
@@ -21,7 +21,7 @@ resource "azurerm_storage_account" "professor" {
 }
 
 resource "azurerm_container_registry" "acr" {
-  name                = "azureclassmay2026"
+  name                = "fizucont"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Premium"
