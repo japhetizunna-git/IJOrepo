@@ -1,30 +1,24 @@
-# resource "azurerm_resource_group" "rg" {
-#   name     = var.rg_name
-#   location = var.rg_location
-# }
-
-resource "azurerm_resource_group" "rg" {
-  name = "justrg"
-  location = "East US"
-}
-
-resource "azurerm_storage_account" "fizustorage" {
-  name                     = "myfizustorage2026"
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = azurerm_resource_group.rg.location
-  account_tier             = "Standard"
-  account_replication_type = "GRS"
-
+resource "aws_instance" "web_server" {
+  ami           = "ami-0b6d9d3d33ba97d99" # Ubuntu 20.04 LTS (replace with your AMI)
+  instance_type = "t3.micro"
+  key_name      = "newkey"
   tags = {
-    environment = "class"
+    Name = "HelloWorldFizu"
   }
 }
 
-resource "azurerm_container_registry" "acr" {
-  name                = "fizucont"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  sku                 = "Premium"
-  admin_enabled       = false
-  
+# S3 Bucket
+resource "aws_s3_bucket" "bucket" {
+  bucket = var.bucket_name
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "aws_s3_bucket_versioning" "bucket_versioning" {
+  bucket = aws_s3_bucket.bucket.id
+  versioning_configuration {
+    status = "Enabled"
+  }
 }

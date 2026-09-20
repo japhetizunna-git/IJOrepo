@@ -1,13 +1,24 @@
 terraform {
+  required_version = ">= 1.5.0"
+
   required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "4.68.0"
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0" # Use latest stable major version
     }
   }
 }
 
-provider "azurerm" {
-  features {}
-  subscription_id = "8fe2b103-b040-4055-bad8-9426cf084c33"
+# AWS Provider block
+provider "aws" {
+  region  = var.aws_region
+  profile = var.aws_profile
+
+  # Optional: Enable default tags for all resources
+  default_tags {
+    tags = {
+      Environment = var.environment
+      ManagedBy   = "Terraform"
+    }
+  }
 }
